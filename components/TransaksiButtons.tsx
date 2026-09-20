@@ -5,12 +5,11 @@ import { Pencil, Plus } from "lucide-react";
 import Modal from "@/components/Modal";
 import TransaksiForm from "@/components/forms/TransaksiForm";
 import { PrimaryButton } from "@/components/ui";
-import type { Kas, Kategori, Kontak, Transaksi } from "@/types/database";
+import type { Kas, Kategori, Transaksi } from "@/types/database";
 
 interface Lists {
   kasList: Kas[];
   kategoriList: Kategori[];
-  kontakList: Kontak[];
 }
 
 export function TambahTransaksiButton({ lists }: { lists: Lists }) {

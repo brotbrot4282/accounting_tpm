@@ -64,13 +64,14 @@ create table if not exists public.kategori (
 alter table public.kategori enable row level security;
 
 -- ============================================================
--- TABEL KONTAK (vendor / customer)
+-- TABEL KONTAK / MITRA
 -- ============================================================
 create table if not exists public.kontak (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null references auth.users (id) on delete cascade,
   nama text not null,
-  tipe text not null check (tipe in ('Vendor', 'Customer')),
+  tipe text not null check (tipe = 'Mitra'),
+  nama_leader text,
   telepon text,
   keterangan text,
   created_at timestamptz not null default now()
@@ -91,6 +92,10 @@ create table if not exists public.transaksi (
   kas_id uuid references public.kas (id) on delete restrict,
   kategori_id uuid references public.kategori (id) on delete restrict,
   kontak_id uuid references public.kontak (id) on delete set null,
+  tipe_penjualan text check (tipe_penjualan in ('PO Paket Reguler', 'VIP')),
+  nama_mitra text,
+  nama_leader text,
+  no_hp text,
   created_at timestamptz not null default now()
 );
 

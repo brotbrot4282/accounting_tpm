@@ -4,26 +4,22 @@ import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { RotateCcw } from "lucide-react";
 import { classNames } from "@/lib/format";
-import type { Kas, Kategori, Kontak } from "@/types/database";
+import type { Kas, Kategori } from "@/types/database";
 
 export default function TransaksiFilter({
   bulan,
   jenis,
   kasId,
   kategoriId,
-  kontakId,
   kasList,
   kategoriList,
-  kontakList,
 }: {
   bulan: string;
   jenis: string;
   kasId: string;
   kategoriId: string;
-  kontakId: string;
   kasList: Kas[];
   kategoriList: Kategori[];
-  kontakList: Kontak[];
 }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -31,14 +27,12 @@ export default function TransaksiFilter({
   const [j1, setJ1] = useState(jenis);
   const [k1, setK1] = useState(kasId);
   const [ka1, setKa1] = useState(kategoriId);
-  const [ko1, setKo1] = useState(kontakId);
 
   function apply(v: {
     bulan?: string;
     jenis?: string;
     kasId?: string;
     kategoriId?: string;
-    kontakId?: string;
     reset?: boolean;
   }) {
     if (v.reset) {
@@ -46,7 +40,6 @@ export default function TransaksiFilter({
       setJ1("");
       setK1("");
       setKa1("");
-      setKo1("");
       router.push(pathname);
       return;
     }
@@ -54,13 +47,11 @@ export default function TransaksiFilter({
     const nextJ = v.jenis ?? j1;
     const nextK = v.kasId ?? k1;
     const nextKa = v.kategoriId ?? ka1;
-    const nextKo = v.kontakId ?? ko1;
     const params = new URLSearchParams();
     if (nextB) params.set("bulan", nextB);
     if (nextJ) params.set("jenis", nextJ);
     if (nextK) params.set("kas", nextK);
     if (nextKa) params.set("kategori", nextKa);
-    if (nextKo) params.set("kontak", nextKo);
     router.push(`${pathname}?${params.toString()}`);
   }
 
@@ -90,11 +81,11 @@ export default function TransaksiFilter({
   const selectClass =
     "rounded-lg border border-white/15 bg-[#1f1f22] px-3 py-2 text-sm text-slate-100 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20";
 
-  const hasFilter = Boolean(jenis || kasId || kategoriId || kontakId);
+  const hasFilter = Boolean(jenis || kasId || kategoriId);
 
   return (
     <div className="flex flex-col gap-3 lg:flex-row lg:items-end">
-      <div className="grid flex-1 grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
+      <div className="grid flex-1 grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <label className="mb-1 block text-xs font-medium text-slate-400">
             Bulan
@@ -166,26 +157,6 @@ export default function TransaksiFilter({
           >
             <option value="">Semua</option>
             {kategoriList.map((k) => (
-              <option key={k.id} value={k.id}>
-                {k.nama}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label className="mb-1 block text-xs font-medium text-slate-400">
-            Kontak
-          </label>
-          <select
-            value={ko1}
-            onChange={(e) => {
-              setKo1(e.target.value);
-              apply({ kontakId: e.target.value });
-            }}
-            className={classNames(selectClass, "w-full")}
-          >
-            <option value="">Semua</option>
-            {kontakList.map((k) => (
               <option key={k.id} value={k.id}>
                 {k.nama}
               </option>

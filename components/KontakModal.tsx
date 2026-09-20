@@ -13,9 +13,9 @@ export function TambahKontakButton() {
     <>
       <PrimaryButton onClick={() => setOpen(true)}>
         <Plus className="h-4 w-4" />
-        Tambah Kontak
+        Tambah Mitra
       </PrimaryButton>
-      <Modal open={open} onClose={() => setOpen(false)} title="Tambah Kontak">
+      <Modal open={open} onClose={() => setOpen(false)} title="Tambah Mitra">
         <KontakForm onClose={() => setOpen(false)} />
       </Modal>
     </>
@@ -34,7 +34,7 @@ export function EditKontakButton({ kontak }: { kontak: Kontak }) {
         <Pencil className="h-3.5 w-3.5" />
         Edit
       </button>
-      <Modal open={open} onClose={() => setOpen(false)} title="Edit Kontak">
+      <Modal open={open} onClose={() => setOpen(false)} title="Edit Mitra">
         <KontakForm kontak={kontak} onClose={() => setOpen(false)} />
       </Modal>
     </>

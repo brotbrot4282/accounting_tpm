@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { inputClass, labelClass } from "@/lib/format";
-import type { Kontak, TipeKontak } from "@/types/database";
+import type { Kontak } from "@/types/database";
 
 export default function KontakForm({
   kontak,
@@ -16,7 +16,7 @@ export default function KontakForm({
   const isEdit = Boolean(kontak);
   const router = useRouter();
   const [nama, setNama] = useState(kontak?.nama ?? "");
-  const [tipe, setTipe] = useState<TipeKontak>(kontak?.tipe ?? "Customer");
+  const [namaLeader, setNamaLeader] = useState(kontak?.nama_leader ?? "");
   const [telepon, setTelepon] = useState(kontak?.telepon ?? "");
   const [keterangan, setKeterangan] = useState(kontak?.keterangan ?? "");
   const [error, setError] = useState("");
@@ -25,7 +25,7 @@ export default function KontakForm({
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!nama.trim()) {
-      setError("Nama kontak wajib diisi.");
+      setError("Nama mitra wajib diisi.");
       return;
     }
     setBusy(true);
@@ -33,7 +33,8 @@ export default function KontakForm({
     const supabase = createClient();
     const payload = {
       nama: nama.trim(),
-      tipe,
+      tipe: "Mitra",
+      nama_leader: namaLeader.trim() || null,
       telepon: telepon.trim() || null,
       keterangan: keterangan.trim() || null,
     };
@@ -52,7 +53,7 @@ export default function KontakForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className={labelClass}>Nama Kontak</label>
+        <label className={labelClass}>Nama Mitra</label>
         <input
           value={nama}
           onChange={(e) => setNama(e.target.value)}
@@ -62,18 +63,16 @@ export default function KontakForm({
         />
       </div>
       <div>
-        <label className={labelClass}>Tipe</label>
-        <select
-          value={tipe}
-          onChange={(e) => setTipe(e.target.value as TipeKontak)}
+        <label className={labelClass}>Nama Leader</label>
+        <input
+          value={namaLeader}
+          onChange={(e) => setNamaLeader(e.target.value)}
+          placeholder="Nama leader jaringan (opsional)"
           className={inputClass}
-        >
-          <option value="Customer">Customer</option>
-          <option value="Vendor">Vendor</option>
-        </select>
+        />
       </div>
       <div>
-        <label className={labelClass}>Telepon</label>
+        <label className={labelClass}>No. HP Mitra</label>
         <input
           value={telepon}
           onChange={(e) => setTelepon(e.target.value)}
@@ -109,7 +108,7 @@ export default function KontakForm({
           disabled={busy}
           className="rounded-lg bg-white px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-200 disabled:opacity-50"
         >
-          {busy ? "Menyimpan…" : isEdit ? "Simpan Perubahan" : "Tambah Kontak"}
+          {busy ? "Menyimpan…" : isEdit ? "Simpan Perubahan" : "Tambah Mitra"}
         </button>
       </div>
     </form>

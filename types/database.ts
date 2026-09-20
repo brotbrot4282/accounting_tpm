@@ -1,6 +1,8 @@
 export type JenisTransaksi = "Pemasukan" | "Pengeluaran";
 export type TipeKas = "Kas" | "Rekening" | "E-Wallet";
-export type TipeKontak = "Vendor" | "Customer";
+export type TipeKontak = "Mitra";
+
+export type TipePenjualan = "PO Paket Reguler" | "VIP";
 
 export interface Profile {
   id: string;
@@ -31,6 +33,7 @@ export interface Kontak {
   user_id: string;
   nama: string;
   tipe: TipeKontak;
+  nama_leader: string | null;
   telepon: string | null;
   keterangan: string | null;
   created_at: string;
@@ -46,6 +49,10 @@ export interface Transaksi {
   kas_id: string | null;
   kategori_id: string | null;
   kontak_id: string | null;
+  tipe_penjualan: TipePenjualan | null;
+  nama_mitra: string | null;
+  nama_leader: string | null;
+  no_hp: string | null;
   created_at: string;
 }
 

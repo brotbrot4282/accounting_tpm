@@ -48,7 +48,7 @@ export const labelClass = "mb-1 block text-sm font-medium text-slate-300";
 // ---- Konstanta pilihan ----
 export const JENIS_TRANSAKSI = ["Pemasukan", "Pengeluaran"] as const;
 export const TIPE_KAS = ["Kas", "Rekening", "E-Wallet"] as const;
-export const TIPE_KONTAK = ["Vendor", "Customer"] as const;
+export const TIPE_KONTAK = ["Mitra"] as const;
 
 export const WARNA_KATEGORI = [
   "#10b981",

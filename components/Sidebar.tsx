@@ -22,7 +22,7 @@ const NAV = [
   { href: "/transaksi", label: "Transaksi", icon: ArrowLeftRight },
   { href: "/kas", label: "Kas / Akun", icon: Landmark },
   { href: "/kategori", label: "Kategori", icon: Tags },
-  { href: "/kontak", label: "Kontak", icon: Users },
+  { href: "/kontak", label: "Mitra", icon: Users },
   { href: "/laporan", label: "Laporan", icon: FileBarChart },
 ];
 

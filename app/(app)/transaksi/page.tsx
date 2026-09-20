@@ -13,7 +13,6 @@ import { formatRupiah, formatTanggalPendek } from "@/lib/format";
 import type {
   Kas,
   Kategori,
-  Kontak,
   TransaksiWithRelasi,
 } from "@/types/database";
 
@@ -29,24 +28,21 @@ export default async function TransaksiPage({
   const jenis = typeof params.jenis === "string" ? params.jenis : "";
   const kas = typeof params.kas === "string" ? params.kas : "";
   const kategori = typeof params.kategori === "string" ? params.kategori : "";
-  const kontak = typeof params.kontak === "string" ? params.kontak : "";
 
   const supabase = await createClient();
 
-  const [kasRes, kategoriRes, kontakRes] = await Promise.all([
+  const [kasRes, kategoriRes] = await Promise.all([
     supabase.from("kas").select("id, nama, tipe"),
     supabase.from("kategori").select("id, nama, tipe, warna"),
-    supabase.from("kontak").select("id, nama, tipe"),
   ]);
 
   const kasList = (kasRes.data ?? []) as Kas[];
   const kategoriList = (kategoriRes.data ?? []) as Kategori[];
-  const kontakList = (kontakRes.data ?? []) as Kontak[];
 
   let query = supabase
     .from("transaksi")
     .select(
-      "id, tanggal, jenis, jumlah, kas_id, kategori_id, kontak_id, keterangan, created_at, kas(nama, tipe), kategori(nama, warna), kontak(nama)"
+      "id, tanggal, jenis, jumlah, kas_id, kategori_id, keterangan, created_at, tipe_penjualan, nama_mitra, nama_leader, no_hp, kas(nama, tipe), kategori(nama, warna)"
     );
 
   if (bulan) {
@@ -67,7 +63,6 @@ export default async function TransaksiPage({
   }
   if (kas) query = query.eq("kas_id", kas);
   if (kategori) query = query.eq("kategori_id", kategori);
-  if (kontak) query = query.eq("kontak_id", kontak);
 
   const { data: transRes } = await query
     .order("tanggal", { ascending: false })
@@ -79,7 +74,6 @@ export default async function TransaksiPage({
   const lists = {
     kasList,
     kategoriList,
-    kontakList,
   };
 
   return (
@@ -97,10 +91,8 @@ export default async function TransaksiPage({
             jenis={jenis}
             kasId={kas}
             kategoriId={kategori}
-            kontakId={kontak}
             kasList={kasList}
             kategoriList={kategoriList}
-            kontakList={kontakList}
           />
         </div>
 
@@ -113,14 +105,15 @@ export default async function TransaksiPage({
           />
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm min-w-[720px]">
+            <table className="w-full text-left text-sm min-w-[960px]">
               <thead>
                 <tr className="border-b border-white/10 text-xs uppercase tracking-wide text-slate-400">
                   <th className="px-4 py-3 font-medium">Tanggal</th>
                   <th className="px-4 py-3 font-medium">Jenis</th>
                   <th className="px-4 py-3 font-medium">Kategori</th>
+                  <th className="px-4 py-3 font-medium">Order</th>
+                  <th className="px-4 py-3 font-medium">Mitra</th>
                   <th className="px-4 py-3 font-medium">Kas / Akun</th>
-                  <th className="px-4 py-3 font-medium">Kontak</th>
                   <th className="px-4 py-3 font-medium">Keterangan</th>
                   <th className="px-4 py-3 text-right font-medium">Jumlah</th>
                   <th className="px-4 py-3 text-right font-medium">Aksi</th>
@@ -154,13 +147,31 @@ export default async function TransaksiPage({
                         )}
                       </div>
                     </td>
+                    <td className="whitespace-nowrap px-4 py-3">
+                      {t.tipe_penjualan ? (
+                        <Badge color="violet">{t.tipe_penjualan}</Badge>
+                      ) : (
+                        <span className="text-slate-500">—</span>
+                      )}
+                    </td>
+                    <td className="whitespace-nowrap px-4 py-3">
+                      {t.nama_mitra ? (
+                        <div>
+                          <p className="font-medium text-slate-200">
+                            {t.nama_mitra}
+                          </p>
+                          <p className="text-xs text-slate-500">
+                            Leader: {t.nama_leader ?? "—"} · {t.no_hp ?? "—"}
+                          </p>
+                        </div>
+                      ) : (
+                        <span className="text-slate-400">—</span>
+                      )}
+                    </td>
                     <td className="whitespace-nowrap px-4 py-3 text-slate-300">
                       {t.kas?.nama ?? "—"}
                     </td>
-                    <td className="whitespace-nowrap px-4 py-3 text-slate-300">
-                      {t.kontak?.nama ?? "—"}
-                    </td>
-                    <td className="max-w-[200px] truncate px-4 py-3 text-slate-400">
+                    <td className="max-w-[180px] truncate px-4 py-3 text-slate-400">
                       {t.keterangan ?? "—"}
                     </td>
                     <td

@@ -27,7 +27,6 @@ import { formatRupiah, formatTanggalPendek } from "@/lib/format";
 import type {
   Kas,
   Kategori,
-  Kontak,
   TransaksiWithRelasi,
 } from "@/types/database";
 
@@ -42,21 +41,19 @@ export const dynamic = "force-dynamic";
 export default async function DashboardPage() {
   const supabase = await createClient();
 
-  const [kasRes, transRes, kategoriRes, kontakRes] = await Promise.all([
+  const [kasRes, transRes, kategoriRes] = await Promise.all([
     supabase.from("kas").select("id, nama, tipe, saldo_awal"),
     supabase
       .from("transaksi")
       .select(
-        "id, tanggal, jenis, jumlah, kas_id, kategori_id, kontak_id, keterangan, created_at, kas(nama, tipe), kategori(nama, warna), kontak(nama)"
+        "id, tanggal, jenis, jumlah, kas_id, kategori_id, keterangan, created_at, tipe_penjualan, nama_mitra, nama_leader, no_hp, kas(nama, tipe), kategori(nama, warna)"
       ),
     supabase.from("kategori").select("id, nama, tipe, warna"),
-    supabase.from("kontak").select("id, nama"),
   ]);
 
   const kasList = (kasRes.data ?? []) as Kas[];
   const transaksi = (transRes.data ?? []) as unknown as TransaksiWithRelasi[];
   const kategoriList = (kategoriRes.data ?? []) as Kategori[];
-  const kontakList = (kontakRes.data ?? []) as Kontak[];
 
   const now = new Date();
 
@@ -154,7 +151,7 @@ export default async function DashboardPage() {
           </p>
         </div>
         <TambahTransaksiButton
-          lists={{ kasList, kategoriList, kontakList }}
+          lists={{ kasList, kategoriList }}
         />
       </div>
 
@@ -286,8 +283,11 @@ export default async function DashboardPage() {
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium text-slate-200">
                     {t.kategori?.nama ?? "Tanpa Kategori"}
-                    {t.kontak ? (
-                      <span className="text-slate-400"> · {t.kontak.nama}</span>
+                    {t.tipe_penjualan ? (
+                      <span className="text-slate-400"> · {t.tipe_penjualan}</span>
+                    ) : null}
+                    {t.nama_mitra ? (
+                      <span className="text-slate-400"> · {t.nama_mitra}</span>
                     ) : null}
                   </p>
                   <p className="text-xs text-slate-400">

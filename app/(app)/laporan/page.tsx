@@ -30,7 +30,7 @@ export default async function LaporanPage({
   let query = supabase
     .from("transaksi")
     .select(
-      "id, tanggal, jenis, jumlah, kas_id, kategori_id, kontak_id, keterangan, created_at, kas(nama), kategori(nama, warna), kontak(nama)"
+      "id, tanggal, jenis, jumlah, kas_id, kategori_id, keterangan, created_at, tipe_penjualan, nama_mitra, nama_leader, no_hp, kas(nama), kategori(nama, warna)"
     )
     .gte("tanggal", `${tahun}-${bulanNum}-01`)
     .lt("tanggal", akhir);
@@ -213,14 +213,15 @@ export default async function LaporanPage({
               />
             ) : (
               <div className="overflow-x-auto">
-                <table className="w-full text-left text-sm min-w-[720px]">
+                <table className="w-full text-left text-sm min-w-[960px]">
                   <thead>
                     <tr className="border-b border-white/10 text-xs uppercase tracking-wide text-slate-400">
                       <th className="px-4 py-3 font-medium">Tanggal</th>
                       <th className="px-4 py-3 font-medium">Jenis</th>
                       <th className="px-4 py-3 font-medium">Kategori</th>
+                      <th className="px-4 py-3 font-medium">Order</th>
+                      <th className="px-4 py-3 font-medium">Mitra</th>
                       <th className="px-4 py-3 font-medium">Kas</th>
-                      <th className="px-4 py-3 font-medium">Kontak</th>
                       <th className="px-4 py-3 font-medium">Keterangan</th>
                       <th className="px-4 py-3 text-right font-medium">Jumlah</th>
                     </tr>
@@ -239,11 +240,29 @@ export default async function LaporanPage({
                         <td className="px-4 py-2.5 text-slate-200">
                           {t.kategori?.nama ?? "—"}
                         </td>
-                        <td className="whitespace-nowrap px-4 py-2.5 text-slate-300">
-                          {t.kas?.nama ?? "—"}
+                        <td className="whitespace-nowrap px-4 py-2.5">
+                          {t.tipe_penjualan ? (
+                            <Badge color="violet">{t.tipe_penjualan}</Badge>
+                          ) : (
+                            <span className="text-slate-500">—</span>
+                          )}
+                        </td>
+                        <td className="whitespace-nowrap px-4 py-2.5">
+                          {t.nama_mitra ? (
+                            <div>
+                              <p className="font-medium text-slate-200">
+                                {t.nama_mitra}
+                              </p>
+                              <p className="text-xs text-slate-400">
+                                Leader: {t.nama_leader ?? "—"} · {t.no_hp ?? "—"}
+                              </p>
+                            </div>
+                          ) : (
+                            <span className="text-slate-300">—</span>
+                          )}
                         </td>
                         <td className="whitespace-nowrap px-4 py-2.5 text-slate-300">
-                          {t.kontak?.nama ?? "—"}
+                          {t.kas?.nama ?? "—"}
                         </td>
                         <td className="max-w-[180px] truncate px-4 py-2.5 text-slate-400">
                           {t.keterangan ?? "—"}
@@ -265,7 +284,7 @@ export default async function LaporanPage({
                   <tfoot>
                     <tr className="border-t-2 border-white/20">
                       <td
-                        colSpan={6}
+                        colSpan={7}
                         className="px-4 py-3 text-right text-sm font-semibold text-slate-100"
                       >
                         Total ({jenis || "Semua"})
