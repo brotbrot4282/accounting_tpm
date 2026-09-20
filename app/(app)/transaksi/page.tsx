@@ -1,0 +1,198 @@
+import { createClient } from "@/lib/supabase/server";
+import {
+  Card,
+  CardHeader,
+  EmptyState,
+  Badge,
+  PageHeader,
+} from "@/components/ui";
+import { TambahTransaksiButton, EditTransaksiButton } from "@/components/TransaksiButtons";
+import DeleteButton from "@/components/DeleteButton";
+import TransaksiFilter from "@/components/TransaksiFilter";
+import { formatRupiah, formatTanggalPendek } from "@/lib/format";
+import type {
+  Kas,
+  Kategori,
+  Kontak,
+  TransaksiWithRelasi,
+} from "@/types/database";
+
+export const dynamic = "force-dynamic";
+
+export default async function TransaksiPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const params = await searchParams;
+  const bulan = typeof params.bulan === "string" ? params.bulan : "";
+  const jenis = typeof params.jenis === "string" ? params.jenis : "";
+  const kas = typeof params.kas === "string" ? params.kas : "";
+  const kategori = typeof params.kategori === "string" ? params.kategori : "";
+  const kontak = typeof params.kontak === "string" ? params.kontak : "";
+
+  const supabase = await createClient();
+
+  const [kasRes, kategoriRes, kontakRes] = await Promise.all([
+    supabase.from("kas").select("id, nama, tipe"),
+    supabase.from("kategori").select("id, nama, tipe, warna"),
+    supabase.from("kontak").select("id, nama, tipe"),
+  ]);
+
+  const kasList = (kasRes.data ?? []) as Kas[];
+  const kategoriList = (kategoriRes.data ?? []) as Kategori[];
+  const kontakList = (kontakRes.data ?? []) as Kontak[];
+
+  let query = supabase
+    .from("transaksi")
+    .select(
+      "id, tanggal, jenis, jumlah, kas_id, kategori_id, kontak_id, keterangan, created_at, kas(nama, tipe), kategori(nama, warna), kontak(nama)"
+    );
+
+  if (bulan) {
+    const [tahun, bulanNum] = bulan.split("-");
+    query = query
+      .gte("tanggal", `${tahun}-${bulanNum}-01`)
+      .lt(
+        "tanggal",
+        `${
+          bulanNum === "12"
+            ? `${Number(tahun) + 1}-01-01`
+            : `${tahun}-${String(Number(bulanNum) + 1).padStart(2, "0")}-01`
+        }`
+      );
+  }
+  if (jenis === "Pemasukan" || jenis === "Pengeluaran") {
+    query = query.eq("jenis", jenis);
+  }
+  if (kas) query = query.eq("kas_id", kas);
+  if (kategori) query = query.eq("kategori_id", kategori);
+  if (kontak) query = query.eq("kontak_id", kontak);
+
+  const { data: transRes } = await query
+    .order("tanggal", { ascending: false })
+    .order("created_at", { ascending: false })
+    .limit(300);
+
+  const transaksi = (transRes ?? []) as unknown as TransaksiWithRelasi[];
+
+  const lists = {
+    kasList,
+    kategoriList,
+    kontakList,
+  };
+
+  return (
+    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <PageHeader
+        title="Transaksi"
+        subtitle="Catat dan kelola seluruh uang masuk & keluar"
+        action={<TambahTransaksiButton lists={lists} />}
+      />
+
+      <Card>
+        <div className="border-b border-slate-100 p-4">
+          <TransaksiFilter
+            bulan={bulan}
+            jenis={jenis}
+            kasId={kas}
+            kategoriId={kategori}
+            kontakId={kontak}
+            kasList={kasList}
+            kategoriList={kategoriList}
+            kontakList={kontakList}
+          />
+        </div>
+
+        {transaksi.length === 0 ? (
+          <EmptyState
+            title="Tidak ada transaksi"
+            description={
+              "Belum ada data untuk filter ini. Ubah filter atau tambahkan transaksi baru."
+            }
+          />
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm">
+              <thead>
+                <tr className="border-b border-slate-100 text-xs uppercase tracking-wide text-slate-400">
+                  <th className="px-4 py-3 font-medium">Tanggal</th>
+                  <th className="px-4 py-3 font-medium">Jenis</th>
+                  <th className="px-4 py-3 font-medium">Kategori</th>
+                  <th className="px-4 py-3 font-medium">Kas / Akun</th>
+                  <th className="px-4 py-3 font-medium">Kontak</th>
+                  <th className="px-4 py-3 font-medium">Keterangan</th>
+                  <th className="px-4 py-3 text-right font-medium">Jumlah</th>
+                  <th className="px-4 py-3 text-right font-medium">Aksi</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {transaksi.map((t) => (
+                  <tr key={t.id} className="hover:bg-slate-50">
+                    <td className="whitespace-nowrap px-4 py-3 text-slate-600">
+                      {formatTanggalPendek(t.tanggal)}
+                    </td>
+                    <td className="px-4 py-3">
+                      <Badge
+                        color={t.jenis === "Pemasukan" ? "emerald" : "red"}
+                      >
+                        {t.jenis}
+                      </Badge>
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-2 text-slate-700">
+                        {t.kategori ? (
+                          <>
+                            <span
+                              className="h-2.5 w-2.5 shrink-0 rounded-full"
+                              style={{ backgroundColor: t.kategori.warna }}
+                            />
+                            {t.kategori.nama}
+                          </>
+                        ) : (
+                          <span className="text-slate-400">—</span>
+                        )}
+                      </div>
+                    </td>
+                    <td className="whitespace-nowrap px-4 py-3 text-slate-600">
+                      {t.kas?.nama ?? "—"}
+                    </td>
+                    <td className="whitespace-nowrap px-4 py-3 text-slate-600">
+                      {t.kontak?.nama ?? "—"}
+                    </td>
+                    <td className="max-w-[200px] truncate px-4 py-3 text-slate-500">
+                      {t.keterangan ?? "—"}
+                    </td>
+                    <td
+                      className={
+                        "whitespace-nowrap px-4 py-3 text-right font-semibold " +
+                        (t.jenis === "Pemasukan"
+                          ? "text-emerald-600"
+                          : "text-red-500")
+                      }
+                    >
+                      {t.jenis === "Pemasukan" ? "+" : "-"}
+                      {formatRupiah(Number(t.jumlah))}
+                    </td>
+                    <td className="whitespace-nowrap px-4 py-3">
+                      <div className="flex items-center justify-end gap-2">
+                        <EditTransaksiButton transaksi={t} lists={lists} />
+                        <DeleteButton id={t.id} table="transaksi" />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+        {transaksi.length >= 300 ? (
+          <p className="px-4 py-3 text-xs text-slate-400">
+            Menampilkan maksimal 300 transaksi. Gunakan filter untuk
+            mempersempit.
+          </p>
+        ) : null}
+      </Card>
+    </div>
+  );
+}
