@@ -116,7 +116,7 @@ export default function Sidebar({
             className="absolute inset-0 bg-black/40"
             onClick={() => setOpen(false)}
           />
-          <div className="absolute inset-y-0 left-0 flex w-64 flex-col border-r border-white/10 bg-[#17171a] shadow-xl">
+          <div className="absolute inset-y-0 left-0 flex w-64 flex-col overflow-y-auto border-r border-white/10 bg-[#17171a] pt-14 shadow-xl">
             {nav}
             {userBlock}
           </div>

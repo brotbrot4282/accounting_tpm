@@ -25,8 +25,8 @@ export default function KategoriChart({
   }
   return (
     <div>
-      <div className="flex items-center gap-6">
-        <div className="relative h-52 w-52 shrink-0">
+      <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
+        <div className="relative mx-auto h-44 w-44 shrink-0 sm:mx-0 sm:h-52 sm:w-52">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie

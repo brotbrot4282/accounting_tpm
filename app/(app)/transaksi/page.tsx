@@ -113,7 +113,7 @@ export default async function TransaksiPage({
           />
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
+            <table className="w-full text-left text-sm min-w-[720px]">
               <thead>
                 <tr className="border-b border-white/10 text-xs uppercase tracking-wide text-slate-400">
                   <th className="px-4 py-3 font-medium">Tanggal</th>
