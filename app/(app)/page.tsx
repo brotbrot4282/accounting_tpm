@@ -64,7 +64,7 @@ export default async function DashboardPage() {
     return (
       <div className="flex min-h-[70vh] items-center justify-center px-4">
         <Card className="w-full max-w-xl p-8 text-center">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600">
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100 text-slate-700">
             <Landmark className="h-7 w-7" />
           </div>
           <h1 className="text-xl font-bold text-slate-900">Selamat datang!</h1>
@@ -255,7 +255,7 @@ export default async function DashboardPage() {
           action={
             <Link
               href="/transaksi"
-              className="text-sm font-semibold text-emerald-600 hover:text-emerald-700"
+              className="text-sm font-semibold text-slate-900 hover:text-slate-700"
             >
               Lihat semua →
             </Link>

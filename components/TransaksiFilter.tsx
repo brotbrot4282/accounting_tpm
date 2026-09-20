@@ -88,7 +88,7 @@ export default function TransaksiFilter({
   }
 
   const selectClass =
-    "rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30";
+    "rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 focus:border-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900/20";
 
   const hasFilter = Boolean(jenis || kasId || kategoriId || kontakId);
 

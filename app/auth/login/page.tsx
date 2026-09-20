@@ -67,14 +67,14 @@ export default function LoginPage() {
         <button
           type="submit"
           disabled={busy}
-          className="w-full rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-emerald-700 disabled:opacity-50"
+          className="w-full rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-slate-700 disabled:opacity-50"
         >
           {busy ? "Memproses…" : "Masuk"}
         </button>
       </form>
       <p className="mt-5 text-center text-sm text-slate-500">
         Belum punya akun?{" "}
-        <Link href="/auth/register" className="font-semibold text-emerald-600 hover:text-emerald-700">
+        <Link href="/auth/register" className="font-semibold text-slate-900 hover:text-slate-700">
           Daftar di sini
         </Link>
       </p>
