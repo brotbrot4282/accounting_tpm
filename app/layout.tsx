@@ -24,7 +24,7 @@ export default function RootLayout({
       lang="id"
       className={`${poppins.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-white text-slate-900">
+      <body className="min-h-full bg-[#121212] text-slate-100">
         {children}
       </body>
     </html>

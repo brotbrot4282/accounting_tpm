@@ -66,9 +66,9 @@ export default async function KasPage() {
         action={<TambahKasButton />}
       />
 
-      <div className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
-        <p className="text-sm font-medium text-slate-500">Total semua kas</p>
-        <p className="text-lg font-bold text-slate-900">
+      <div className="mb-4 flex items-center justify-between rounded-xl border border-white/10 bg-[#1b1b1d] px-5 py-4 shadow-sm">
+        <p className="text-sm font-medium text-slate-400">Total semua kas</p>
+        <p className="text-lg font-bold text-slate-100">
           {formatRupiah(totalSaldo)}
         </p>
       </div>
@@ -91,16 +91,16 @@ export default async function KasPage() {
                     className={classNames(
                       "flex h-11 w-11 items-center justify-center rounded-xl",
                       k.tipe === "Rekening"
-                        ? "bg-blue-50 text-blue-600"
+                        ? "bg-blue-500/10 text-blue-400"
                         : k.tipe === "E-Wallet"
-                        ? "bg-amber-50 text-amber-600"
-                        : "bg-slate-100 text-slate-600"
+                        ? "bg-amber-500/10 text-amber-400"
+                        : "bg-white/10 text-slate-300"
                     )}
                   >
                     {TIPE_ICON[k.tipe]}
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-slate-900">
+                    <p className="text-sm font-semibold text-slate-100">
                       {k.nama}
                     </p>
                     <Badge color={TIPE_BADGE[k.tipe]}>{k.tipe}</Badge>
@@ -108,13 +108,13 @@ export default async function KasPage() {
                 </div>
               </div>
               <div className="mt-4">
-                <p className="text-sm text-slate-500">Saldo berjalan</p>
+                <p className="text-sm text-slate-400">Saldo berjalan</p>
                 <p
                   className={classNames(
                     "text-xl font-bold",
                     (saldoMap.get(k.id) ?? 0) < 0
-                      ? "text-red-500"
-                      : "text-slate-900"
+                      ? "text-red-400"
+                      : "text-slate-100"
                   )}
                 >
                   {formatRupiah(saldoMap.get(k.id) ?? 0)}
@@ -124,7 +124,7 @@ export default async function KasPage() {
                 <span>Saldo awal: {formatRupiah(Number(k.saldo_awal))}</span>
                 <span>{countMap.get(k.id) ?? 0} transaksi</span>
               </div>
-              <div className="mt-4 flex items-center justify-end gap-2 border-t border-slate-100 pt-4">
+              <div className="mt-4 flex items-center justify-end gap-2 border-t border-white/10 pt-4">
                 <EditKasButton kas={k} />
                 <DeleteButton id={k.id} table="kas" />
               </div>

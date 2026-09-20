@@ -91,7 +91,7 @@ export default async function TransaksiPage({
       />
 
       <Card>
-        <div className="border-b border-slate-100 p-4">
+        <div className="border-b border-white/10 p-4">
           <TransaksiFilter
             bulan={bulan}
             jenis={jenis}
@@ -115,7 +115,7 @@ export default async function TransaksiPage({
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="border-b border-slate-100 text-xs uppercase tracking-wide text-slate-400">
+                <tr className="border-b border-white/10 text-xs uppercase tracking-wide text-slate-400">
                   <th className="px-4 py-3 font-medium">Tanggal</th>
                   <th className="px-4 py-3 font-medium">Jenis</th>
                   <th className="px-4 py-3 font-medium">Kategori</th>
@@ -126,10 +126,10 @@ export default async function TransaksiPage({
                   <th className="px-4 py-3 text-right font-medium">Aksi</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-white/10">
                 {transaksi.map((t) => (
-                  <tr key={t.id} className="hover:bg-slate-50">
-                    <td className="whitespace-nowrap px-4 py-3 text-slate-600">
+                  <tr key={t.id} className="hover:bg-white/5">
+                    <td className="whitespace-nowrap px-4 py-3 text-slate-300">
                       {formatTanggalPendek(t.tanggal)}
                     </td>
                     <td className="px-4 py-3">
@@ -140,7 +140,7 @@ export default async function TransaksiPage({
                       </Badge>
                     </td>
                     <td className="px-4 py-3">
-                      <div className="flex items-center gap-2 text-slate-700">
+                      <div className="flex items-center gap-2 text-slate-200">
                         {t.kategori ? (
                           <>
                             <span
@@ -154,21 +154,21 @@ export default async function TransaksiPage({
                         )}
                       </div>
                     </td>
-                    <td className="whitespace-nowrap px-4 py-3 text-slate-600">
+                    <td className="whitespace-nowrap px-4 py-3 text-slate-300">
                       {t.kas?.nama ?? "—"}
                     </td>
-                    <td className="whitespace-nowrap px-4 py-3 text-slate-600">
+                    <td className="whitespace-nowrap px-4 py-3 text-slate-300">
                       {t.kontak?.nama ?? "—"}
                     </td>
-                    <td className="max-w-[200px] truncate px-4 py-3 text-slate-500">
+                    <td className="max-w-[200px] truncate px-4 py-3 text-slate-400">
                       {t.keterangan ?? "—"}
                     </td>
                     <td
                       className={
                         "whitespace-nowrap px-4 py-3 text-right font-semibold " +
                         (t.jenis === "Pemasukan"
-                          ? "text-emerald-600"
-                          : "text-red-500")
+                          ? "text-emerald-400"
+                          : "text-red-400")
                       }
                     >
                       {t.jenis === "Pemasukan" ? "+" : "-"}

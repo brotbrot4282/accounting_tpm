@@ -28,13 +28,13 @@ export default async function KontakPage() {
       />
 
       <div className="mb-4 grid grid-cols-2 gap-4">
-        <div className="rounded-xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
-          <p className="text-sm text-slate-500">Customer</p>
-          <p className="text-lg font-bold text-slate-900">{countCustomer}</p>
+        <div className="rounded-xl border border-white/10 bg-[#1b1b1d] px-5 py-4 shadow-sm">
+          <p className="text-sm text-slate-400">Customer</p>
+          <p className="text-lg font-bold text-slate-100">{countCustomer}</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
-          <p className="text-sm text-slate-500">Vendor</p>
-          <p className="text-lg font-bold text-slate-900">{countVendor}</p>
+        <div className="rounded-xl border border-white/10 bg-[#1b1b1d] px-5 py-4 shadow-sm">
+          <p className="text-sm text-slate-400">Vendor</p>
+          <p className="text-lg font-bold text-slate-100">{countVendor}</p>
         </div>
       </div>
 
@@ -51,7 +51,7 @@ export default async function KontakPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="border-b border-slate-100 text-xs uppercase tracking-wide text-slate-400">
+                <tr className="border-b border-white/10 text-xs uppercase tracking-wide text-slate-400">
                   <th className="px-4 py-3 font-medium">Nama</th>
                   <th className="px-4 py-3 font-medium">Tipe</th>
                   <th className="px-4 py-3 font-medium">Telepon</th>
@@ -59,10 +59,10 @@ export default async function KontakPage() {
                   <th className="px-4 py-3 text-right font-medium">Aksi</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-white/10">
                 {kontakList.map((k) => (
-                  <tr key={k.id} className="hover:bg-slate-50">
-                    <td className="px-4 py-3 font-medium text-slate-800">
+                  <tr key={k.id} className="hover:bg-white/5">
+                    <td className="px-4 py-3 font-medium text-slate-200">
                       {k.nama}
                     </td>
                     <td className="px-4 py-3">
@@ -70,10 +70,10 @@ export default async function KontakPage() {
                         {k.tipe}
                       </Badge>
                     </td>
-                    <td className="px-4 py-3 text-slate-600">
+                    <td className="px-4 py-3 text-slate-300">
                       {k.telepon ?? "—"}
                     </td>
-                    <td className="max-w-[240px] truncate px-4 py-3 text-slate-500">
+                    <td className="max-w-[240px] truncate px-4 py-3 text-slate-400">
                       {k.keterangan ?? "—"}
                     </td>
                     <td className="whitespace-nowrap px-4 py-3">

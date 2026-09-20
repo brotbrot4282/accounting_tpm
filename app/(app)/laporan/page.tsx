@@ -83,11 +83,11 @@ export default async function LaporanPage({
       </div>
 
       {/* Header untuk cetak */}
-      <div className="mb-6 border-b-2 border-slate-900 pb-4">
-        <h1 className="text-xl font-bold text-slate-900">
+      <div className="mb-6 border-b-2 border-white/20 pb-4">
+        <h1 className="text-xl font-bold text-slate-100">
           Laporan Keuangan — Tujuh Pilar
         </h1>
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="mt-1 text-sm text-slate-400">
           Periode: {labelBulan} {tahun}
           {jenis ? ` · ${jenis}` : ""}
         </p>
@@ -106,23 +106,23 @@ export default async function LaporanPage({
       ) : (
         <>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-4">
-              <p className="text-sm text-emerald-700">Total Pemasukan</p>
-              <p className="text-xl font-bold text-emerald-700">
+            <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-5 py-4">
+              <p className="text-sm text-emerald-400">Total Pemasukan</p>
+              <p className="text-xl font-bold text-emerald-400">
                 {formatRupiah(totalMasuk)}
               </p>
             </div>
-            <div className="rounded-xl border border-red-200 bg-red-50 px-5 py-4">
-              <p className="text-sm text-red-600">Total Pengeluaran</p>
-              <p className="text-xl font-bold text-red-600">
+            <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-5 py-4">
+              <p className="text-sm text-red-400">Total Pengeluaran</p>
+              <p className="text-xl font-bold text-red-400">
                 {formatRupiah(totalKeluar)}
               </p>
             </div>
-            <div className="rounded-xl border border-slate-200 bg-white px-5 py-4">
-              <p className="text-sm text-slate-500">
+            <div className="rounded-xl border border-white/10 bg-white/5 px-5 py-4">
+              <p className="text-sm text-slate-400">
                 Selisih / Laba (bulan ini)
               </p>
-              <p className="text-xl font-bold text-slate-900">
+              <p className="text-xl font-bold text-slate-100">
                 {formatRupiah(totalMasuk - totalKeluar)}
               </p>
             </div>
@@ -139,17 +139,17 @@ export default async function LaporanPage({
                   />
                   <table className="mt-4 w-full text-left text-sm">
                     <thead>
-                      <tr className="border-b border-slate-100 text-xs uppercase text-slate-400">
+                      <tr className="border-b border-white/10 text-xs uppercase text-slate-400">
                         <th className="py-2 font-medium">Kategori</th>
                         <th className="py-2 text-right font-medium">Jumlah</th>
                         <th className="py-2 text-right font-medium">%</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-50">
+                    <tbody className="divide-y divide-white/10">
                       {breakdownIn.map((b) => (
                         <tr key={b.name}>
-                          <td className="py-2 text-slate-700">{b.name}</td>
-                          <td className="py-2 text-right font-medium text-emerald-600">
+                          <td className="py-2 text-slate-200">{b.name}</td>
+                          <td className="py-2 text-right font-medium text-emerald-400">
                             {formatRupiah(b.value)}
                           </td>
                           <td className="py-2 text-right text-slate-400">
@@ -176,17 +176,17 @@ export default async function LaporanPage({
                   />
                   <table className="mt-4 w-full text-left text-sm">
                     <thead>
-                      <tr className="border-b border-slate-100 text-xs uppercase text-slate-400">
+                      <tr className="border-b border-white/10 text-xs uppercase text-slate-400">
                         <th className="py-2 font-medium">Kategori</th>
                         <th className="py-2 text-right font-medium">Jumlah</th>
                         <th className="py-2 text-right font-medium">%</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-50">
+                    <tbody className="divide-y divide-white/10">
                       {breakdownOut.map((b) => (
                         <tr key={b.name}>
-                          <td className="py-2 text-slate-700">{b.name}</td>
-                          <td className="py-2 text-right font-medium text-red-500">
+                          <td className="py-2 text-slate-200">{b.name}</td>
+                          <td className="py-2 text-right font-medium text-red-400">
                             {formatRupiah(b.value)}
                           </td>
                           <td className="py-2 text-right text-slate-400">
@@ -215,7 +215,7 @@ export default async function LaporanPage({
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-sm">
                   <thead>
-                    <tr className="border-b border-slate-100 text-xs uppercase tracking-wide text-slate-400">
+                    <tr className="border-b border-white/10 text-xs uppercase tracking-wide text-slate-400">
                       <th className="px-4 py-3 font-medium">Tanggal</th>
                       <th className="px-4 py-3 font-medium">Jenis</th>
                       <th className="px-4 py-3 font-medium">Kategori</th>
@@ -225,10 +225,10 @@ export default async function LaporanPage({
                       <th className="px-4 py-3 text-right font-medium">Jumlah</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100">
+                  <tbody className="divide-y divide-white/10">
                     {filtered.map((t) => (
                       <tr key={t.id}>
-                        <td className="whitespace-nowrap px-4 py-2.5 text-slate-600">
+                        <td className="whitespace-nowrap px-4 py-2.5 text-slate-300">
                           {formatTanggalPendek(t.tanggal)}
                         </td>
                         <td className="px-4 py-2.5">
@@ -236,24 +236,24 @@ export default async function LaporanPage({
                             {t.jenis}
                           </Badge>
                         </td>
-                        <td className="px-4 py-2.5 text-slate-700">
+                        <td className="px-4 py-2.5 text-slate-200">
                           {t.kategori?.nama ?? "—"}
                         </td>
-                        <td className="whitespace-nowrap px-4 py-2.5 text-slate-600">
+                        <td className="whitespace-nowrap px-4 py-2.5 text-slate-300">
                           {t.kas?.nama ?? "—"}
                         </td>
-                        <td className="whitespace-nowrap px-4 py-2.5 text-slate-600">
+                        <td className="whitespace-nowrap px-4 py-2.5 text-slate-300">
                           {t.kontak?.nama ?? "—"}
                         </td>
-                        <td className="max-w-[180px] truncate px-4 py-2.5 text-slate-500">
+                        <td className="max-w-[180px] truncate px-4 py-2.5 text-slate-400">
                           {t.keterangan ?? "—"}
                         </td>
                         <td
                           className={
                             "whitespace-nowrap px-4 py-2.5 text-right font-semibold " +
                             (t.jenis === "Pemasukan"
-                              ? "text-emerald-600"
-                              : "text-red-500")
+                              ? "text-emerald-400"
+                              : "text-red-400")
                           }
                         >
                           {t.jenis === "Pemasukan" ? "+" : "-"}
@@ -263,14 +263,14 @@ export default async function LaporanPage({
                     ))}
                   </tbody>
                   <tfoot>
-                    <tr className="border-t-2 border-slate-200">
+                    <tr className="border-t-2 border-white/20">
                       <td
                         colSpan={6}
-                        className="px-4 py-3 text-right text-sm font-semibold text-slate-900"
+                        className="px-4 py-3 text-right text-sm font-semibold text-slate-100"
                       >
                         Total ({jenis || "Semua"})
                       </td>
-                      <td className="whitespace-nowrap px-4 py-3 text-right text-sm font-bold text-slate-900">
+                      <td className="whitespace-nowrap px-4 py-3 text-right text-sm font-bold text-slate-100">
                         {formatRupiah(
                           jenis === "Pemasukan"
                             ? totalMasuk

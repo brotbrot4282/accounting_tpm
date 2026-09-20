@@ -41,9 +41,9 @@ export function namaBulan(bulan: string): string {
 
 // ---- Gaya form bersama (dipakai komponen form & filter) ----
 export const inputClass =
-  "w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900/20";
+  "w-full rounded-lg border border-white/15 bg-[#1f1f22] px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20";
 export const selectClass = inputClass;
-export const labelClass = "mb-1 block text-sm font-medium text-slate-700";
+export const labelClass = "mb-1 block text-sm font-medium text-slate-300";
 
 // ---- Konstanta pilihan ----
 export const JENIS_TRANSAKSI = ["Pemasukan", "Pengeluaran"] as const;

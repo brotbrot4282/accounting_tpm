@@ -43,13 +43,13 @@ export default function DeleteButton({
 
   return (
     <div className="flex items-center gap-2">
-      {error ? <span className="text-xs text-red-600">{error}</span> : null}
+      {error ? <span className="text-xs text-red-400">{error}</span> : null}
       <button
         type="button"
         onClick={handleDelete}
         disabled={busy}
         className={classNames(
-          "inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs font-medium text-slate-600 transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-600 disabled:opacity-50",
+          "inline-flex items-center gap-1.5 rounded-lg border border-white/10 px-2.5 py-1.5 text-xs font-medium text-slate-300 transition-colors hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-400 disabled:opacity-50",
           className
         )}
       >

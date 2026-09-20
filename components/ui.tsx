@@ -10,7 +10,7 @@ export function Card({
   return (
     <div
       className={classNames(
-        "overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm",
+        "overflow-hidden rounded-xl border border-white/10 bg-[#1b1b1d] shadow-sm",
         className
       )}
     >
@@ -39,11 +39,11 @@ export function CardHeader({
   action?: React.ReactNode;
 }) {
   return (
-    <div className="flex items-center justify-between gap-3 border-b border-slate-100 px-5 py-4">
+    <div className="flex items-center justify-between gap-3 border-b border-white/10 px-5 py-4">
       <div>
-        <h3 className="text-sm font-semibold text-slate-900">{title}</h3>
+        <h3 className="text-sm font-semibold text-slate-100">{title}</h3>
         {subtitle ? (
-          <p className="mt-0.5 text-xs text-slate-500">{subtitle}</p>
+          <p className="mt-0.5 text-xs text-slate-400">{subtitle}</p>
         ) : null}
       </div>
       {action}
@@ -70,7 +70,7 @@ export function PrimaryButton({
       onClick={onClick}
       disabled={disabled}
       className={classNames(
-        "inline-flex items-center justify-center gap-1.5 rounded-lg bg-slate-900 px-3.5 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-900/30 disabled:cursor-not-allowed disabled:opacity-50",
+        "inline-flex items-center justify-center gap-1.5 rounded-lg bg-white px-3.5 py-2 text-sm font-medium text-slate-900 shadow-sm transition hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-white/30 disabled:cursor-not-allowed disabled:opacity-50",
         className
       )}
     >
@@ -91,11 +91,11 @@ export function PageHeader({
   return (
     <div className="flex flex-wrap items-center justify-between gap-3">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+        <h1 className="text-2xl font-bold tracking-tight text-slate-100">
           {title}
         </h1>
         {subtitle ? (
-          <p className="mt-1 text-sm text-slate-500">{subtitle}</p>
+          <p className="mt-1 text-sm text-slate-400">{subtitle}</p>
         ) : null}
       </div>
       {action}
@@ -122,11 +122,11 @@ export function StatCard({
   accent?: "emerald" | "red" | "slate" | "blue" | "amber";
 }) {
   const accents: Record<string, string> = {
-    emerald: "bg-emerald-50 text-emerald-600",
-    red: "bg-red-50 text-red-600",
-    slate: "bg-slate-100 text-slate-600",
-    blue: "bg-blue-50 text-blue-600",
-    amber: "bg-amber-50 text-amber-600",
+    emerald: "bg-emerald-500/15 text-emerald-400",
+    red: "bg-red-500/15 text-red-400",
+    slate: "bg-white/10 text-slate-300",
+    blue: "bg-blue-500/15 text-blue-400",
+    amber: "bg-amber-500/15 text-amber-400",
   };
   return (
     <Card className="flex items-center gap-4 p-5">
@@ -141,20 +141,20 @@ export function StatCard({
         </div>
       ) : null}
       <div className="min-w-0">
-        <p className="text-xs font-medium text-slate-500">{label}</p>
-        <p className="truncate text-lg font-bold text-slate-900">{value}</p>
+        <p className="text-xs font-medium text-slate-400">{label}</p>
+        <p className="truncate text-lg font-bold text-slate-100">{value}</p>
       </div>
     </Card>
   );
 }
 
 const BADGE_COLORS: Record<string, string> = {
-  emerald: "bg-emerald-50 text-emerald-700 ring-emerald-600/20",
-  red: "bg-red-50 text-red-700 ring-red-600/20",
-  slate: "bg-slate-100 text-slate-600 ring-slate-500/20",
-  blue: "bg-blue-50 text-blue-700 ring-blue-600/20",
-  violet: "bg-violet-50 text-violet-700 ring-violet-600/20",
-  amber: "bg-amber-50 text-amber-700 ring-amber-600/20",
+  emerald: "bg-emerald-500/15 text-emerald-400 ring-emerald-400/25",
+  red: "bg-red-500/15 text-red-400 ring-red-400/25",
+  slate: "bg-white/10 text-slate-300 ring-white/20",
+  blue: "bg-blue-500/15 text-blue-400 ring-blue-400/25",
+  violet: "bg-violet-500/15 text-violet-400 ring-violet-400/25",
+  amber: "bg-amber-500/15 text-amber-400 ring-amber-400/25",
 };
 
 export function Badge({
@@ -188,13 +188,13 @@ export function EmptyState({
   return (
     <div className="flex flex-col items-center justify-center px-6 py-14 text-center">
       {icon ? (
-        <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-slate-400">
+        <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-slate-400">
           {icon}
         </div>
       ) : null}
-      <p className="text-sm font-semibold text-slate-700">{title}</p>
+      <p className="text-sm font-semibold text-slate-200">{title}</p>
       {description ? (
-        <p className="mt-1 max-w-sm text-sm text-slate-500">{description}</p>
+        <p className="mt-1 max-w-sm text-sm text-slate-400">{description}</p>
       ) : null}
     </div>
   );
@@ -209,11 +209,11 @@ export function PageTitle({
 }) {
   return (
     <div>
-      <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+      <h1 className="text-2xl font-bold tracking-tight text-slate-100">
         {title}
       </h1>
       {description ? (
-        <p className="mt-1 text-sm text-slate-500">{description}</p>
+        <p className="mt-1 text-sm text-slate-400">{description}</p>
       ) : null}
     </div>
   );

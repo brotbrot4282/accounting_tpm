@@ -64,11 +64,11 @@ export default async function DashboardPage() {
     return (
       <div className="flex min-h-[70vh] items-center justify-center px-4">
         <Card className="w-full max-w-xl p-8 text-center">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100 text-slate-700">
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 text-slate-300">
             <Landmark className="h-7 w-7" />
           </div>
-          <h1 className="text-xl font-bold text-slate-900">Selamat datang!</h1>
-          <p className="mx-auto mt-2 max-w-md text-sm text-slate-500">
+          <h1 className="text-xl font-bold text-slate-100">Selamat datang!</h1>
+          <p className="mx-auto mt-2 max-w-md text-sm text-slate-400">
             Akunmu sudah siap. Tambahkan kas pertama (Kas Utama, rekening bank,
             atau e-wallet) untuk mulai mencatat keuangan perusahaan Tujuh Pilar.
           </p>
@@ -147,8 +147,8 @@ export default async function DashboardPage() {
     <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Dashboard</h1>
-          <p className="mt-0.5 text-sm text-slate-500">
+          <h1 className="text-2xl font-bold text-slate-100">Dashboard</h1>
+          <p className="mt-0.5 text-sm text-slate-400">
             Ringkasan keuangan{" "}
             {new Intl.DateTimeFormat("id-ID", { dateStyle: "long" }).format(now)}
           </p>
@@ -195,24 +195,24 @@ export default async function DashboardPage() {
 
         <Card>
           <CardHeader title="Saldo per Kas / Akun" />
-          <ul className="divide-y divide-slate-100">
+          <ul className="divide-y divide-white/10">
             {kasList.map((k) => (
               <li
                 key={k.id}
                 className="flex items-center justify-between px-5 py-3"
               >
                 <div className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-100 text-slate-500">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-slate-400">
                     <Landmark className="h-4 w-4" />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-slate-800">
+                    <p className="text-sm font-medium text-slate-200">
                       {k.nama}
                     </p>
                     <Badge color={TIPE_BADGE[k.tipe]}>{k.tipe}</Badge>
                   </div>
                 </div>
-                <p className="text-sm font-semibold text-slate-900">
+                <p className="text-sm font-semibold text-slate-100">
                   {formatRupiah(saldoMap.get(k.id) ?? 0)}
                 </p>
               </li>
@@ -255,7 +255,7 @@ export default async function DashboardPage() {
           action={
             <Link
               href="/transaksi"
-              className="text-sm font-semibold text-slate-900 hover:text-slate-700"
+              className="text-sm font-semibold text-slate-300 hover:text-white"
             >
               Lihat semua →
             </Link>
@@ -267,14 +267,14 @@ export default async function DashboardPage() {
             description="Mulai catat pemasukan atau pengeluaran pertama perusahaanmu."
           />
         ) : (
-          <ul className="divide-y divide-slate-100">
+          <ul className="divide-y divide-white/10">
             {recent.map((t) => (
               <li key={t.id} className="flex items-center gap-3 px-5 py-3">
                 <div
                   className={
                     t.jenis === "Pemasukan"
-                      ? "flex h-9 w-9 items-center justify-center rounded-full bg-emerald-50 text-emerald-600"
-                      : "flex h-9 w-9 items-center justify-center rounded-full bg-red-50 text-red-500"
+                      ? "flex h-9 w-9 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-400"
+                      : "flex h-9 w-9 items-center justify-center rounded-full bg-red-500/15 text-red-400"
                   }
                 >
                   {t.jenis === "Pemasukan" ? (
@@ -284,21 +284,21 @@ export default async function DashboardPage() {
                   )}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium text-slate-800">
+                  <p className="truncate text-sm font-medium text-slate-200">
                     {t.kategori?.nama ?? "Tanpa Kategori"}
                     {t.kontak ? (
                       <span className="text-slate-400"> · {t.kontak.nama}</span>
                     ) : null}
                   </p>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-400">
                     {formatTanggalPendek(t.tanggal)} · {t.kas?.nama}
                   </p>
                 </div>
                 <p
                   className={
                     t.jenis === "Pemasukan"
-                      ? "text-sm font-semibold text-emerald-600"
-                      : "text-sm font-semibold text-red-500"
+                      ? "text-sm font-semibold text-emerald-400"
+                      : "text-sm font-semibold text-red-400"
                   }
                 >
                   {t.jenis === "Pemasukan" ? "+" : "-"}

@@ -46,15 +46,17 @@ export default function KategoriChart({
                 formatter={(value) => formatRupiah(Number(value))}
                 contentStyle={{
                   borderRadius: 8,
-                  border: "1px solid #e2e8f0",
+                  border: "1px solid #3f3f46",
+                  backgroundColor: "#1c1c1f",
                   fontSize: 12,
+                  color: "#f8fafc",
                 }}
               />
             </PieChart>
           </ResponsiveContainer>
           <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
             <p className="text-xs text-slate-400">Total</p>
-            <p className="max-w-[120px] truncate text-sm font-bold text-slate-900">
+            <p className="max-w-[120px] truncate text-sm font-bold text-slate-100">
               {formatRupiah(total)}
             </p>
           </div>
@@ -66,10 +68,10 @@ export default function KategoriChart({
                 className="h-2.5 w-2.5 shrink-0 rounded-full"
                 style={{ backgroundColor: d.color }}
               />
-              <span className="min-w-0 flex-1 truncate text-slate-600">
+              <span className="min-w-0 flex-1 truncate text-slate-300">
                 {d.name}
               </span>
-              <span className="shrink-0 font-medium text-slate-800">
+              <span className="shrink-0 font-medium text-slate-200">
                 {formatRupiah(d.value)}
               </span>
             </li>

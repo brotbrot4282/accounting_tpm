@@ -33,9 +33,9 @@ export default async function KategoriPage() {
   function renderSection(tipe: string, items: Kategori[]) {
     return (
       <Card>
-        <div className="border-b border-slate-100 px-5 py-4">
-          <h2 className="text-base font-semibold text-slate-900">{tipe}</h2>
-          <p className="mt-0.5 text-sm text-slate-500">
+        <div className="border-b border-white/10 px-5 py-4">
+          <h2 className="text-base font-semibold text-slate-100">{tipe}</h2>
+          <p className="mt-0.5 text-sm text-slate-400">
             {items.length} kategori
           </p>
         </div>
@@ -45,7 +45,7 @@ export default async function KategoriPage() {
             description="Tambahkan kategori untuk mempermudah laporan keuangan."
           />
         ) : (
-          <ul className="divide-y divide-slate-100">
+          <ul className="divide-y divide-white/10">
             {items.map((k) => (
               <li
                 key={k.id}
@@ -57,7 +57,7 @@ export default async function KategoriPage() {
                     style={{ backgroundColor: k.warna }}
                   />
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-medium text-slate-800">
+                    <p className="truncate text-sm font-medium text-slate-200">
                       {k.nama}
                     </p>
                     <p className="text-xs text-slate-400">

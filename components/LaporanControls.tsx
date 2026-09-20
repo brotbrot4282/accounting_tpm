@@ -83,7 +83,7 @@ export default function LaporanControls({
       <button
         type="button"
         onClick={() => window.print()}
-        className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 print:hidden"
+        className="inline-flex items-center gap-1.5 rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-sm font-medium text-slate-300 hover:bg-white/10 print:hidden"
       >
         <Printer className="h-4 w-4" />
         Cetak / PDF

@@ -49,8 +49,8 @@ export default function Sidebar({
             className={classNames(
               "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
               active
-                ? "bg-slate-900 text-white shadow-sm"
-                : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                ? "bg-white text-slate-900 shadow-sm"
+                : "text-slate-400 hover:bg-white/10 hover:text-white"
             )}
           >
             <Icon className="h-4 w-4 shrink-0" />
@@ -62,22 +62,22 @@ export default function Sidebar({
   );
 
   const userBlock = (
-    <div className="border-t border-slate-200 px-3 py-4">
+    <div className="border-t border-white/10 px-3 py-4">
       <div className="mb-3 flex items-center gap-3">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-slate-900 font-semibold text-white">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white font-semibold text-slate-900">
           {fullName.charAt(0).toUpperCase()}
         </div>
         <div className="min-w-0">
-          <p className="truncate text-sm font-semibold text-slate-800">
+          <p className="truncate text-sm font-semibold text-white">
             {fullName}
           </p>
-          <p className="truncate text-xs text-slate-500">{email}</p>
+          <p className="truncate text-xs text-slate-400">{email}</p>
         </div>
       </div>
       <form action={signOutAction}>
         <button
           type="submit"
-          className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-red-50 hover:text-red-600"
+          className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-400 transition-colors hover:bg-red-500/10 hover:text-red-400"
         >
           <LogOut className="h-4 w-4 shrink-0" />
           Keluar
@@ -89,20 +89,20 @@ export default function Sidebar({
   return (
     <>
       {/* Mobile header bar */}
-      <div className="sticky top-0 z-40 flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3 lg:hidden">
+      <div className="sticky top-0 z-40 flex items-center justify-between border-b border-white/10 bg-[#17171a] px-4 py-3 lg:hidden print:hidden">
         <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-900 text-sm font-bold text-white">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-sm font-bold text-slate-900">
             TP
           </div>
           <div>
-            <p className="text-sm font-bold text-slate-900">Tujuh Pilar</p>
-            <p className="text-[11px] text-slate-500">Pembukuan Keuangan</p>
+            <p className="text-sm font-bold text-white">Tujuh Pilar</p>
+            <p className="text-[11px] text-slate-400">Pembukuan Keuangan</p>
           </div>
         </div>
         <button
           type="button"
           onClick={() => setOpen(!open)}
-          className="rounded-lg p-2 text-slate-600 hover:bg-slate-100"
+          className="rounded-lg p-2 text-slate-300 hover:bg-white/10"
           aria-label="Buka menu"
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -116,7 +116,7 @@ export default function Sidebar({
             className="absolute inset-0 bg-black/40"
             onClick={() => setOpen(false)}
           />
-          <div className="absolute inset-y-0 left-0 flex w-64 flex-col bg-white shadow-xl">
+          <div className="absolute inset-y-0 left-0 flex w-64 flex-col border-r border-white/10 bg-[#17171a] shadow-xl">
             {nav}
             {userBlock}
           </div>
@@ -124,14 +124,14 @@ export default function Sidebar({
       )}
 
       {/* Desktop sidebar */}
-      <aside className="hidden w-64 shrink-0 flex-col border-r border-slate-200 bg-white lg:flex">
-        <div className="flex items-center gap-3 border-b border-slate-200 px-5 py-5">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-lg font-bold text-white">
+      <aside className="hidden w-64 shrink-0 flex-col border-r border-white/10 bg-[#17171a] lg:flex print:hidden">
+        <div className="flex items-center gap-3 border-b border-white/10 px-5 py-5">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-lg font-bold text-slate-900">
             TP
           </div>
           <div>
-            <p className="text-base font-bold text-slate-900">Tujuh Pilar</p>
-            <p className="text-xs text-slate-500">Pembukuan Keuangan</p>
+            <p className="text-base font-bold text-white">Tujuh Pilar</p>
+            <p className="text-xs text-slate-400">Pembukuan Keuangan</p>
           </div>
         </div>
         {nav}

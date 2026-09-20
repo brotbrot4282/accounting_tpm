@@ -67,9 +67,9 @@ export default function KategoriForm({
                 "rounded-lg border px-3 py-2 text-sm font-semibold transition-colors",
                 tipe === t
                   ? t === "Pemasukan"
-                    ? "border-emerald-600 bg-emerald-50 text-emerald-700"
-                    : "border-red-600 bg-red-50 text-red-700"
-                  : "border-slate-200 bg-white text-slate-500 hover:bg-slate-50"
+                    ? "border-emerald-400/60 bg-emerald-500/15 text-emerald-300"
+                    : "border-red-400/60 bg-red-500/15 text-red-300"
+                  : "border-white/10 bg-white/5 text-slate-400 hover:bg-white/10"
               )}
             >
               {t}
@@ -89,7 +89,7 @@ export default function KategoriForm({
               className={classNames(
                 "h-8 w-8 rounded-full transition-transform",
                 warna === w
-                  ? "scale-110 ring-2 ring-slate-900 ring-offset-2"
+                  ? "scale-110 ring-2 ring-white ring-offset-2 ring-offset-[#1c1c1f]"
                   : "hover:scale-110"
               )}
               aria-label={`Warna ${w}`}
@@ -98,7 +98,7 @@ export default function KategoriForm({
         </div>
       </div>
       {error ? (
-        <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">
+        <p className="rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-400">
           {error}
         </p>
       ) : null}
@@ -106,14 +106,14 @@ export default function KategoriForm({
         <button
           type="button"
           onClick={onClose}
-          className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50"
+          className="rounded-lg border border-white/15 px-4 py-2 text-sm font-medium text-slate-300 hover:bg-white/10"
         >
           Batal
         </button>
         <button
           type="submit"
           disabled={busy}
-          className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-700 disabled:opacity-50"
+          className="rounded-lg bg-white px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-200 disabled:opacity-50"
         >
           {busy ? "Menyimpan…" : isEdit ? "Simpan Perubahan" : "Tambah Kategori"}
         </button>

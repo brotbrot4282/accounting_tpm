@@ -88,7 +88,7 @@ export default function TransaksiFilter({
   }
 
   const selectClass =
-    "rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 focus:border-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900/20";
+    "rounded-lg border border-white/15 bg-[#1f1f22] px-3 py-2 text-sm text-slate-100 focus:border-white focus:outline-none focus:ring-2 focus:ring-white/20";
 
   const hasFilter = Boolean(jenis || kasId || kategoriId || kontakId);
 
@@ -96,7 +96,7 @@ export default function TransaksiFilter({
     <div className="flex flex-col gap-3 lg:flex-row lg:items-end">
       <div className="grid flex-1 grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
         <div>
-          <label className="mb-1 block text-xs font-medium text-slate-500">
+          <label className="mb-1 block text-xs font-medium text-slate-400">
             Bulan
           </label>
           <select
@@ -116,7 +116,7 @@ export default function TransaksiFilter({
           </select>
         </div>
         <div>
-          <label className="mb-1 block text-xs font-medium text-slate-500">
+          <label className="mb-1 block text-xs font-medium text-slate-400">
             Jenis
           </label>
           <select
@@ -133,7 +133,7 @@ export default function TransaksiFilter({
           </select>
         </div>
         <div>
-          <label className="mb-1 block text-xs font-medium text-slate-500">
+          <label className="mb-1 block text-xs font-medium text-slate-400">
             Kas / Akun
           </label>
           <select
@@ -153,7 +153,7 @@ export default function TransaksiFilter({
           </select>
         </div>
         <div>
-          <label className="mb-1 block text-xs font-medium text-slate-500">
+          <label className="mb-1 block text-xs font-medium text-slate-400">
             Kategori
           </label>
           <select
@@ -173,7 +173,7 @@ export default function TransaksiFilter({
           </select>
         </div>
         <div>
-          <label className="mb-1 block text-xs font-medium text-slate-500">
+          <label className="mb-1 block text-xs font-medium text-slate-400">
             Kontak
           </label>
           <select
@@ -198,7 +198,7 @@ export default function TransaksiFilter({
         <button
           type="button"
           onClick={() => apply({ reset: true })}
-          className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50"
+          className="inline-flex items-center gap-1.5 rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-sm font-medium text-slate-300 transition-colors hover:bg-white/10"
         >
           <RotateCcw className="h-3.5 w-3.5" />
           Reset Filter
