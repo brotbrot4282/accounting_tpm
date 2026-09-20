@@ -18,7 +18,7 @@ export default async function AppLayout({
     user.user_metadata?.full_name || user.email || "Pengguna";
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen flex-col lg:flex-row">
       <Sidebar fullName={fullName} email={user.email ?? ""} />
       <main className="min-h-screen w-full flex-1 overflow-x-auto bg-[#121212]">
         {children}
