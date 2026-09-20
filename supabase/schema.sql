@@ -138,6 +138,41 @@ create policy "transaksi per user" on public.transaksi
   with check (auth.uid() = user_id);
 
 -- ============================================================
+-- TRIGGER: isi user_id otomatis dari user yang login saat insert
+-- ============================================================
+create or replace function public.set_user_id()
+returns trigger
+language plpgsql
+as $$
+begin
+  if new.user_id is null then
+    new.user_id := auth.uid();
+  end if;
+  return new;
+end;
+$$;
+
+drop trigger if exists trg_set_user_id_transaksi on public.transaksi;
+create trigger trg_set_user_id_transaksi
+  before insert on public.transaksi
+  for each row execute procedure public.set_user_id();
+
+drop trigger if exists trg_set_user_id_kas on public.kas;
+create trigger trg_set_user_id_kas
+  before insert on public.kas
+  for each row execute procedure public.set_user_id();
+
+drop trigger if exists trg_set_user_id_kategori on public.kategori;
+create trigger trg_set_user_id_kategori
+  before insert on public.kategori
+  for each row execute procedure public.set_user_id();
+
+drop trigger if exists trg_set_user_id_kontak on public.kontak;
+create trigger trg_set_user_id_kontak
+  before insert on public.kontak
+  for each row execute procedure public.set_user_id();
+
+-- ============================================================
 -- SEED DATA DEFAULT (dibuat otomatis saat user pertama daftar)
 -- ============================================================
 create or replace function public.seed_initial_data()
