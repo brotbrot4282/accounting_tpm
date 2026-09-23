@@ -110,41 +110,102 @@ const TABLE_REGION: Record<string, string> = {
   kontak: "bg-amber-500 text-white",
 };
 
+const STAT_STYLES: Record<
+  StatAccent,
+  { bg: string; tile: string; glow: string; valueText: string }
+> = {
+  emerald: {
+    bg: "from-emerald-500/25 via-emerald-500/5 to-transparent",
+    tile: "from-emerald-400 to-teal-600",
+    glow: "bg-emerald-400/30",
+    valueText: "text-emerald-300",
+  },
+  red: {
+    bg: "from-red-500/25 via-red-500/5 to-transparent",
+    tile: "from-rose-500 to-red-600",
+    glow: "bg-red-400/30",
+    valueText: "text-red-300",
+  },
+  blue: {
+    bg: "from-blue-500/25 via-blue-500/5 to-transparent",
+    tile: "from-sky-400 to-blue-600",
+    glow: "bg-blue-400/30",
+    valueText: "text-sky-300",
+  },
+  amber: {
+    bg: "from-amber-500/25 via-amber-500/5 to-transparent",
+    tile: "from-amber-400 to-orange-600",
+    glow: "bg-amber-400/30",
+    valueText: "text-amber-300",
+  },
+  slate: {
+    bg: "from-slate-500/25 via-slate-500/5 to-transparent",
+    tile: "from-slate-300 to-slate-600",
+    glow: "bg-slate-400/30",
+    valueText: "text-slate-200",
+  },
+  violet: {
+    bg: "from-violet-500/25 via-violet-500/5 to-transparent",
+    tile: "from-violet-400 to-purple-600",
+    glow: "bg-violet-400/30",
+    valueText: "text-violet-300",
+  },
+};
+
+export type StatAccent = "emerald" | "red" | "slate" | "blue" | "amber" | "violet";
+
 export function StatCard({
   label,
   value,
   icon,
+  sub,
   accent = "emerald",
 }: {
   label: string;
   value: React.ReactNode;
   icon?: React.ReactNode;
-  accent?: "emerald" | "red" | "slate" | "blue" | "amber";
+  sub?: React.ReactNode;
+  accent?: StatAccent;
 }) {
-  const accents: Record<string, string> = {
-    emerald: "bg-emerald-500/15 text-emerald-400",
-    red: "bg-red-500/15 text-red-400",
-    slate: "bg-white/10 text-slate-300",
-    blue: "bg-blue-500/15 text-blue-400",
-    amber: "bg-amber-500/15 text-amber-400",
-  };
+  const s = STAT_STYLES[accent];
   return (
-    <Card className="flex items-center gap-4 p-5">
+    <div
+      className={classNames(
+        "relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br p-5 shadow-lg",
+        s.bg
+      )}
+    >
+      <div
+        className={classNames(
+          "pointer-events-none absolute -right-8 -top-10 h-28 w-28 rounded-full blur-2xl",
+          s.glow
+        )}
+      />
       {icon ? (
         <div
           className={classNames(
-            "flex h-11 w-11 shrink-0 items-center justify-center rounded-xl",
-            accents[accent]
+            "relative flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br text-white shadow-lg",
+            s.tile
           )}
         >
           {icon}
         </div>
       ) : null}
-      <div className="min-w-0">
-        <p className="text-xs font-medium text-slate-400">{label}</p>
-        <p className="truncate text-lg font-bold text-slate-100">{value}</p>
-      </div>
-    </Card>
+      <p className="relative mt-4 text-xs font-medium uppercase tracking-wide text-slate-400">
+        {label}
+      </p>
+      <p
+        className={classNames(
+          "relative mt-1 truncate text-2xl font-extrabold tracking-tight",
+          s.valueText
+        )}
+      >
+        {value}
+      </p>
+      {sub ? (
+        <p className="relative mt-1.5 text-xs text-slate-400">{sub}</p>
+      ) : null}
+    </div>
   );
 }
 

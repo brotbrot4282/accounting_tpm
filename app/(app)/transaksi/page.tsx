@@ -13,6 +13,7 @@ import { formatRupiah, formatTanggalPendek } from "@/lib/format";
 import type {
   Kas,
   Kategori,
+  Kontak,
   TransaksiWithRelasi,
 } from "@/types/database";
 
@@ -31,13 +32,15 @@ export default async function TransaksiPage({
 
   const supabase = await createClient();
 
-  const [kasRes, kategoriRes] = await Promise.all([
+  const [kasRes, kategoriRes, kontakRes] = await Promise.all([
     supabase.from("kas").select("id, nama, tipe"),
     supabase.from("kategori").select("id, nama, tipe, warna"),
+    supabase.from("kontak").select("id, nama, nama_leader, telepon"),
   ]);
 
   const kasList = (kasRes.data ?? []) as Kas[];
   const kategoriList = (kategoriRes.data ?? []) as Kategori[];
+  const kontakList = (kontakRes.data ?? []) as Kontak[];
 
   let query = supabase
     .from("transaksi")
@@ -74,6 +77,7 @@ export default async function TransaksiPage({
   const lists = {
     kasList,
     kategoriList,
+    kontakList,
   };
 
   return (

@@ -27,6 +27,7 @@ import { formatRupiah, formatTanggalPendek } from "@/lib/format";
 import type {
   Kas,
   Kategori,
+  Kontak,
   TransaksiWithRelasi,
 } from "@/types/database";
 
@@ -41,7 +42,7 @@ export const dynamic = "force-dynamic";
 export default async function DashboardPage() {
   const supabase = await createClient();
 
-  const [kasRes, transRes, kategoriRes] = await Promise.all([
+  const [kasRes, transRes, kategoriRes, kontakRes] = await Promise.all([
     supabase.from("kas").select("id, nama, tipe, saldo_awal"),
     supabase
       .from("transaksi")
@@ -49,11 +50,13 @@ export default async function DashboardPage() {
         "id, tanggal, jenis, jumlah, kas_id, kategori_id, keterangan, created_at, tipe_penjualan, nama_mitra, nama_leader, no_hp, kas(nama, tipe), kategori(nama, warna)"
       ),
     supabase.from("kategori").select("id, nama, tipe, warna"),
+    supabase.from("kontak").select("id, nama, nama_leader, telepon"),
   ]);
 
   const kasList = (kasRes.data ?? []) as Kas[];
   const transaksi = (transRes.data ?? []) as unknown as TransaksiWithRelasi[];
   const kategoriList = (kategoriRes.data ?? []) as Kategori[];
+  const kontakList = (kontakRes.data ?? []) as Kontak[];
 
   const now = new Date();
 
@@ -151,7 +154,7 @@ export default async function DashboardPage() {
           </p>
         </div>
         <TambahTransaksiButton
-          lists={{ kasList, kategoriList }}
+          lists={{ kasList, kategoriList, kontakList }}
         />
       </div>
 
@@ -161,24 +164,39 @@ export default async function DashboardPage() {
           value={formatRupiah(totalSaldo)}
           icon={<Wallet className="h-5 w-5" />}
           accent="slate"
+          sub={`Tersebar di ${kasList.length} kas / akun`}
         />
         <StatCard
-          label="Pemasukan (6 bulan)"
+          label="Pemasukan"
           value={formatRupiah(totalPemasukan6)}
           icon={<TrendingUp className="h-5 w-5" />}
           accent="emerald"
+          sub={`6 bulan · rata-rata ${formatRupiah(
+            Math.round(totalPemasukan6 / 6)
+          )}/bulan`}
         />
         <StatCard
-          label="Pengeluaran (6 bulan)"
+          label="Pengeluaran"
           value={formatRupiah(totalPengeluaran6)}
           icon={<ArrowDownCircle className="h-5 w-5" />}
           accent="red"
+          sub={`6 bulan · rata-rata ${formatRupiah(
+            Math.round(totalPengeluaran6 / 6)
+          )}/bulan`}
         />
         <StatCard
-          label="Selisih (6 bulan)"
+          label="Selisih"
           value={formatRupiah(totalPemasukan6 - totalPengeluaran6)}
           icon={<PiggyBank className="h-5 w-5" />}
-          accent="blue"
+          accent={totalPemasukan6 >= totalPengeluaran6 ? "blue" : "violet"}
+          sub={
+            totalPemasukan6 > 0
+              ? `Margin ${(
+                  ((totalPemasukan6 - totalPengeluaran6) / totalPemasukan6) *
+                  100
+                ).toFixed(1)}%`
+              : "Pemasukan − Pengeluaran"
+          }
         />
       </div>
 
