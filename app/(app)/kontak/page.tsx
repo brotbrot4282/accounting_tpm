@@ -2,6 +2,7 @@ import { Users } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { Card, EmptyState, PageHeader } from "@/components/ui";
 import { TambahKontakButton, EditKontakButton } from "@/components/KontakModal";
+import SinkronMitraButton from "@/components/SinkronMitraButton";
 import DeleteButton from "@/components/DeleteButton";
 import type { Kontak } from "@/types/database";
 
@@ -22,7 +23,12 @@ export default async function KontakPage() {
       <PageHeader
         title="Mitra"
         subtitle="Data mitra jaringan (poin jaringan / afiliasi)"
-        action={<TambahKontakButton />}
+        action={
+          <div className="flex flex-wrap items-center gap-2">
+            <TambahKontakButton />
+            <SinkronMitraButton />
+          </div>
+        }
       />
 
       <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-2">

@@ -62,6 +62,13 @@ export interface TransaksiWithRelasi extends Transaksi {
   kontak?: { id: string; nama: string; tipe: TipeKontak } | null;
 }
 
+export interface MitraOption {
+  id: string;
+  nama: string;
+  nama_leader: string | null;
+  telepon: string | null;
+}
+
 export interface KasWithSaldo extends Kas {
   saldo: number;
 }

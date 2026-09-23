@@ -9,7 +9,7 @@ import type {
   JenisTransaksi,
   Kas,
   Kategori,
-  Kontak,
+  MitraOption,
   TipePenjualan,
   Transaksi,
 } from "@/types/database";
@@ -17,13 +17,13 @@ import type {
 export default function TransaksiForm({
   kasList,
   kategoriList,
-  kontakList,
+  mitraList,
   transaksi,
   onClose,
 }: {
   kasList: Kas[];
   kategoriList: Kategori[];
-  kontakList: Kontak[];
+  mitraList: MitraOption[];
   transaksi?: Transaksi | null;
   onClose: () => void;
 }) {
@@ -54,7 +54,7 @@ export default function TransaksiForm({
   const mitraSuggest = useMemo(() => {
     const q = namaMitra.trim().toLowerCase();
     if (!q) return [];
-    return kontakList
+    return mitraList
       .filter(
         (k) =>
           k.nama.toLowerCase().includes(q) ||
@@ -62,9 +62,9 @@ export default function TransaksiForm({
       )
       .sort((a, b) => a.nama.localeCompare(b.nama))
       .slice(0, 8);
-  }, [kontakList, namaMitra]);
+  }, [mitraList, namaMitra]);
 
-  function pilihMitra(k: Kontak) {
+  function pilihMitra(k: MitraOption) {
     setNamaMitra(k.nama);
     setNamaLeader(k.nama_leader ?? "");
     setNoHp(k.telepon ?? "");
@@ -172,6 +172,40 @@ export default function TransaksiForm({
       setBusy(false);
       return;
     }
+
+    const mitraUnik = new Map<
+      string,
+      { nama: string; leader: string; hp: string }
+    >();
+    for (const p of payloads) {
+      if (p.jenis !== "Pemasukan" || !p.nama_mitra) continue;
+      const nama = p.nama_mitra.trim();
+      if (!nama) continue;
+      const key = nama.toLowerCase();
+      if (!mitraUnik.has(key)) {
+        mitraUnik.set(key, {
+          nama,
+          leader: (p.nama_leader ?? "").trim(),
+          hp: (p.no_hp ?? "").trim(),
+        });
+      }
+    }
+    for (const m of mitraUnik.values()) {
+      const { data: existing } = await supabase
+        .from("kontak")
+        .select("id")
+        .eq("nama", m.nama)
+        .maybeSingle();
+      if (!existing) {
+        await supabase.from("kontak").insert({
+          nama: m.nama,
+          tipe: "Mitra",
+          nama_leader: m.leader || null,
+          telepon: m.hp || null,
+        });
+      }
+    }
+
     router.refresh();
     onClose();
   }
@@ -436,10 +470,10 @@ export default function TransaksiForm({
                     ))}
                   </ul>
                 ) : null}
-                {mitraOpen && kontakList.length === 0 ? (
+                {mitraOpen && mitraList.length === 0 ? (
                   <div className="absolute z-20 mt-1 w-full rounded-lg border border-white/10 bg-[#1f1f22] px-3 py-2 text-xs text-slate-400 shadow-xl">
-                    Belum ada data mitra. Ketik manual atau tambahkan di menu
-                    Mitra.
+                    Belum ada data mitra. Nama yang kamu ketik akan otomatis
+                    masuk ke menu Mitra.
                   </div>
                 ) : mitraOpen &&
                   mitraSuggest.length === 0 &&

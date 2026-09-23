@@ -24,10 +24,12 @@ import KategoriChart, {
 import { TambahTransaksiButton } from "@/components/TransaksiButtons";
 import { TambahKasButton } from "@/components/KasModal";
 import { formatRupiah, formatTanggalPendek } from "@/lib/format";
+import { buildMitraOptions } from "@/lib/mitra";
 import type {
   Kas,
   Kategori,
   Kontak,
+  MitraOption,
   TransaksiWithRelasi,
 } from "@/types/database";
 
@@ -57,6 +59,14 @@ export default async function DashboardPage() {
   const transaksi = (transRes.data ?? []) as unknown as TransaksiWithRelasi[];
   const kategoriList = (kategoriRes.data ?? []) as Kategori[];
   const kontakList = (kontakRes.data ?? []) as Kontak[];
+  const mitraList: MitraOption[] = buildMitraOptions(
+    kontakList,
+    transaksi.map((t) => ({
+      nama: t.nama_mitra,
+      nama_leader: t.nama_leader,
+      no_hp: t.no_hp,
+    }))
+  );
 
   const now = new Date();
 
@@ -154,7 +164,7 @@ export default async function DashboardPage() {
           </p>
         </div>
         <TambahTransaksiButton
-          lists={{ kasList, kategoriList, kontakList }}
+          lists={{ kasList, kategoriList, mitraList }}
         />
       </div>
 

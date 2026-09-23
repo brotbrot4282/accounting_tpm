@@ -10,10 +10,12 @@ import { TambahTransaksiButton, EditTransaksiButton } from "@/components/Transak
 import DeleteButton from "@/components/DeleteButton";
 import TransaksiFilter from "@/components/TransaksiFilter";
 import { formatRupiah, formatTanggalPendek } from "@/lib/format";
+import { buildMitraOptions } from "@/lib/mitra";
 import type {
   Kas,
   Kategori,
   Kontak,
+  MitraOption,
   TransaksiWithRelasi,
 } from "@/types/database";
 
@@ -32,15 +34,29 @@ export default async function TransaksiPage({
 
   const supabase = await createClient();
 
-  const [kasRes, kategoriRes, kontakRes] = await Promise.all([
+  const [kasRes, kategoriRes, kontakRes, mitraTransRes] = await Promise.all([
     supabase.from("kas").select("id, nama, tipe"),
     supabase.from("kategori").select("id, nama, tipe, warna"),
     supabase.from("kontak").select("id, nama, nama_leader, telepon"),
+    supabase
+      .from("transaksi")
+      .select("nama_mitra, nama_leader, no_hp")
+      .eq("jenis", "Pemasukan")
+      .not("nama_mitra", "is", null)
+      .order("tanggal", { ascending: false }),
   ]);
 
   const kasList = (kasRes.data ?? []) as Kas[];
   const kategoriList = (kategoriRes.data ?? []) as Kategori[];
   const kontakList = (kontakRes.data ?? []) as Kontak[];
+  const mitraList: MitraOption[] = buildMitraOptions(
+    kontakList,
+    (mitraTransRes.data ?? []).map((t) => ({
+      nama: t.nama_mitra,
+      nama_leader: t.nama_leader,
+      no_hp: t.no_hp,
+    }))
+  );
 
   let query = supabase
     .from("transaksi")
@@ -77,7 +93,7 @@ export default async function TransaksiPage({
   const lists = {
     kasList,
     kategoriList,
-    kontakList,
+    mitraList,
   };
 
   return (
