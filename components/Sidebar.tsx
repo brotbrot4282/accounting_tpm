@@ -124,7 +124,7 @@ export default function Sidebar({
       )}
 
       {/* Desktop sidebar */}
-      <aside className="hidden w-64 shrink-0 flex-col border-r border-white/10 bg-[#17171a] lg:flex print:hidden">
+      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col border-r border-white/10 bg-[#17171a] lg:flex print:hidden">
         <div className="flex items-center gap-3 border-b border-white/10 px-5 py-5">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-lg font-bold text-slate-900">
             TP
